@@ -1,0 +1,45 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix prof: <http://www.w3.org/ns/dx/prof/> .
+@prefix role: <http://www.w3.org/ns/dx/prof/role/> .
+@prefix sdo: <https://schema.org/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+<https://w3id.org/profile/skosnull>
+    a prof:Profile ;
+    dcterms:created "2020-08-26"^^xsd:date ;
+    dcterms:creator <https://surroundaustralia.com> ;
+    dcterms:modified "2020-08-26"^^xsd:date ;
+    dcterms:publisher <https://surroundaustralia.com> ;
+    skos:definition "A profile of SKOS Core Vocabulary Specification that imposes no restrictions - this is a null profile"@en ;
+    dcterms:title "Null Profile of SKOS Core Vocabulary Specification" ;
+    prof:hasResource [
+        dcterms:title "Specification Document"@en ;
+        dcterms:conformsTo <https://www.w3.org/TR/html52/> ;
+        dcterms:format "text/html" ;
+        prof:hasArtifact <https://w3id.org/profile/skosnull/specification.html> ;
+        prof:hasRole role:specification
+    ] ,
+    [
+        dcterms:title "Validator in SHACL"@en ;
+        dcterms:conformsTo <https://www.w3.org/TR/shacl/> ;
+        dcterms:format "text/turtle" ;
+        prof:hasArtifact <https://w3id.org/profile/skosnull/validation.ttl> ;
+        prof:hasRole role:validation
+    ] ,
+    [
+        dcterms:title "Profile code repository"@en ;
+        dcterms:description "Code repository storing all Profile artifacts"@en ;
+        prof:hasArtifact <https://github.com/surroundaustralia/skosnull-profile> ;
+        prof:hasRole role:repository
+    ] ,
+    [
+        dcterms:title "Repository README file"@en ;
+        dcterms:conformsTo <https://www.w3.org/TR/shacl/> ;
+        dcterms:format "text/markdown" ;
+        prof:hasArtifact <https://w3id.org/profile/skosnull/validation.ttl> ;
+        prof:hasRole role:guidance
+    ] ;
+    prof:isProfileOf <https://www.w3.org/TR/swbp-skos-core-spec/> ;
+.
