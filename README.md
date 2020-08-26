@@ -1,6 +1,6 @@
 # SKOS Null Profile
 
-A *profile* of [Null Profile of SKOS Core Vocabulary Specification](https://www.w3.org/TR/swbp-skos-core-spec/), characterised according to [The Profiles Vocabulary](https://www.w3.org/TR/dx-prof/),  that imposes no restrictions - this is a null profile.
+A *profile* of Null Profile of [SKOS Core Vocabulary Specification](https://www.w3.org/TR/swbp-skos-core-spec/), characterised according to [The Profiles Vocabulary](https://www.w3.org/TR/dx-prof/),  that imposes no restrictions - this is a null profile.
 
 This file is a basic *README* file for the repository containing this profile's elements. For the profile information itself, please go to the profile's persistent web address:
 
