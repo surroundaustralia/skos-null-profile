@@ -2,7 +2,6 @@
 @prefix prof: <http://www.w3.org/ns/dx/prof/> .
 @prefix role: <http://www.w3.org/ns/dx/prof/role/> .
 @prefix sdo: <https://schema.org/> .
-@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 
@@ -12,7 +11,7 @@
     dcterms:creator <https://surroundaustralia.com> ;
     dcterms:modified "2020-08-26"^^xsd:date ;
     dcterms:publisher <https://surroundaustralia.com> ;
-    skos:definition "A profile of SKOS Core Vocabulary Specification that imposes no restrictions - this is a null profile"@en ;
+    dcterms:description "A profile of SKOS Core Vocabulary Specification that imposes no restrictions - this is a null profile"@en ;
     dcterms:title "Null Profile of SKOS Core Vocabulary Specification" ;
     prof:hasResource [
         dcterms:title "Specification Document"@en ;
@@ -21,6 +20,15 @@
         prof:hasArtifact <https://w3id.org/profile/skosnull/specification.html> ;
         prof:hasRole role:specification
     ] ,
+    [
+        dcterms:title "SKOS OWL schema"@en ;
+        dcterms:description "The original SKOS RDF vocabulary for describing the basic structure and content of concept schemes, unchanged as a Resource in this Profile." ;
+        skos:isFormatOf <https://www.w3.org/TR/owl2-rdf-based-semantics/> ;
+        dcterms:conformsTo <https://www.w3.org/TR/owl2-rdf-based-semantics/> ;
+        dcterms:format "text/turtle" ;
+        prof:hasArtifact <https://w3id.org/profile/skosnull/skos.ttl> ;
+        prof:hasRole role:validation
+    ] ,    
     [
         dcterms:title "Validator in SHACL"@en ;
         dcterms:conformsTo <https://www.w3.org/TR/shacl/> ;

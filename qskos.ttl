@@ -1,0 +1,118 @@
+# from https://github.com/cmader/qSKOS/wiki/Quality-Issues
+
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sdo: <https://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@base <https://w3id.org/profile/dcatnull/shapes/> .
+
+
+
+# Labeling and Documentation Issues
+<OmittedOrInvalidLanguageTags>
+	rdfs:label "Omitted or Invalid Language Tags" ;
+	sh:message "Some controlled vocabularies contain literals in natural language, but without information what language has actually been used. Language tags might also not conform to language standards, such as RFC 3066.";
+<IncompleteLanguageCoverage>
+	rdfs:label "Incomplete Language Coverage" ;
+	sh:message "Some concepts in a thesaurus are labeled in only one language, some in multiple languages. It may be desirable to have each concept labeled in each of the languages that also are used on the other concepts. This is not always possible, but incompleteness of language coverage for some concepts can indicate shortcomings of the vocabulary.";
+<NoCommonLanguage>
+	rdfs:label "No Common Language" ;
+	sh:message "Checks if all concepts have at least one common language, i.e. they have assigned at least one literal in the same language.";
+<UndocumentedConcepts>
+	rdfs:label "Undocumented Concepts" ;
+	sh:message "The SKOS "standard" defines a number of properties useful for documenting the meaning of the concepts in a thesaurus (section 7) also in a human-readable form. Intense use of these properties leads to a well-documented thesaurus which should also improve its quality.";
+<OverlappingLabels>
+	rdfs:label "Overlapping Labels" ;
+	sh:message "This is a generalization of a recommendation in the SKOS primer, that “no two concepts have the same preferred lexical label in a given language when they belong to the same concept scheme”. This could indicate missing disambiguation information and thus lead to problems in autocompletion application.";
+<MissingLabels>
+	rdfs:label "Missing Labels" ;
+	sh:message "To make the vocabulary more convenient for humans to use, instances of SKOS classes (Concept, ConceptScheme, Collection) should be labeled using e.g., prefLabel, altLabel, rdfs:label, dc:title.";
+<UnprintableCharactersInLabels>
+	rdfs:label "Unprintable Characters in Labels" ;
+	sh:message "pref/alt/hiddenlabels contain characters that are not alphanumeric characters or blanks.";
+
+<EmptyLabels>
+	a sh:NodeShape ;
+	sh:targetNode ex:Bob, ex:Alice ;
+	sh:property [
+		sh:path ex:password ;
+		sh:minLength 1 ;
+	] .
+	rdfs:label "Empty Labels" ;
+	sh:message "Labels also need to contain textual information to be useful, thus we find all SKOS labels with length 0 (after removing whitespaces).";
+
+
+<AmbiguousNotationReferences>
+	rdfs:label "Ambiguous Notation References" ;
+	sh:message "Concepts within the same concept scheme should not have identlical skos:notation literals.";
+
+# Structural Issues
+<OrphanConcepts>
+	rdfs:label "Orphan Concepts" ;
+	sh:message "An orphan concept is a concept without any associative or hierarchical relations. It might have attached literals like e.g., labels, but is not connected to any other resource, lacking valuable context information. A controlled vocabulary that contains many orphan concepts is less usable for search and retrieval use cases, because, e.g., no hierarchical query expansion can be performed on search terms to find documents with more general content.";
+<DisconnectedConceptClusters>
+	rdfs:label "Disconnected Concept Clusters" ;
+	sh:message "Checking the connectivity of the graph, it is possible to identify all weakly connected components. These datasets form "islands" in the vocabulary and might be caused by incomplete data acquisition, "forgotten" test data, outdated terms and the like.";
+<CyclicHierarchicalRelations>
+	rdfs:label "Cyclic Hierarchical Relations" ;
+	sh:message """Although perfectly consistent with the SKOS data model, cyclic relations may reveal a logical problem in the thesaurus. Consider the following example: "decision" -> "problem resolution" -> "problem" (-> "decision": here the cycle is closed). The concepts are connected using skos:broader relationships (indicated with "->"). Due to the fact that a thesaurus is in many cases a product of consensus between the contributors (or just the decision of one dedicated thesaurus manager), it will be almost impossible to automatically resolve the cycle (i.e. deleting an edge).""";
+<ValuelessAssociativeRelations>
+	rdfs:label "Valueless Associative Relations" ;
+	sh:message "Two concepts are sibling, but also connected by an associative relation. In that context, the associative relation is not necessary. See ISO_DIS_25964-1, 11.3.2.2.";
+<SolelyTransitivelyRelatedConcepts>
+	rdfs:label "Solely Transitively Related Concepts" ;
+	sh:message """skos:broaderTransitive and skos:narrowerTransitive are, according to the SKOS reference document, "not used to make assertions", so they should not be the only relations hierarchically relating two concepts.""";
+<UnidirectionallyRelatedConcepts>
+	rdfs:label "Unidirectionally Related Concepts" ;
+	sh:message "Reciprocal relations (e.g., broader/narrower, related, hasTopConcept/topConceptOf) should be included in the controlled vocabularies to, e.g., to achieve better search results using SPARQL in systems without reasoner support.";
+<OmittedTopConcepts>
+	rdfs:label "Omitted Top Concepts" ;
+	sh:message """A vocabulary should provide "entry points" to the data to provide “efficient access” (SKOS primer) and guidance for human users.""";
+<TopConceptsHavingBroaderConcepts>
+	rdfs:label "Top Concepts Having Broader Concepts" ;
+	sh:message "Concepts "internal to the tree" should not be indicated as top concepts, as pointed out in [Allemang2011].";
+<HierarchicalRedundancy>
+	rdfs:label "Hierarchical Redundancy" ;
+	sh:message """As stated in the SKOS reference document, skos:broader and skos:narrower are not transitive properties. However, they are subproperties of skos:broaderTransitive and skos:narrowerTransitive which enables inference of a "transitive closure". This, in fact, leaves it up to the user to interpret wheter a vocabulary's hierarchical structure is seen as transitive or not. In the former case, this check can be useful. It finds pairs of concepts (A,B) that are directly hierarchically related but there also exits an hierarchical path through a concept C that connects A and B.""";
+<ReflexiveRelations>
+	rdfs:label "Reflexive Relations" ;
+	sh:message "Concepts related to themsevels.";
+
+# Linked Data Specific Issues
+<MissingInLinks>
+	rdfs:label "Missing In-Links" ;
+	sh:message "";
+<MissingOutLinks>
+	rdfs:label "Missing Out-Links" ;
+	sh:message "";
+<BrokenLinks>
+	rdfs:label "Broken Links" ;
+	sh:message "";
+<UndefinedSKOSResources>
+	rdfs:label "Undefined SKOS Resources" ;
+	sh:message "";
+<HTTPURISchemeViolation>
+	rdfs:label "HTTP URI Scheme Violation" ;
+	sh:message "";
+
+# SKOS Semi-Formal Consistency Issues
+<RelationClashes>
+	rdfs:label "Relation Clashes" ;
+	sh:message "";
+<MappingClashes>
+	rdfs:label "Mapping Clashes" ;
+	sh:message "";
+<InconsistentPreferredLabels>
+	rdfs:label "Inconsistent Preferred Labels" ;
+	sh:message "";
+<DisjointLabelsViolation>
+	rdfs:label "Disjoint Labels Violation" ;
+	sh:message "";
+<MappingRelationsMisuse>
+	rdfs:label "Mapping Relations Misuse" ;
+	sh:message "";
